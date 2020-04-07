@@ -1,0 +1,10 @@
+FROM ubuntu
+RUN apt-get update
+RUN apt-get -y install curl git
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
+RUN apt-get -y install nodejs
+RUN npm install -g truffle
+RUN git clone https://github.com/boivlad/erc20-tokens.git
+RUN git clone https://github.com/andrii482/7nodeds.git
+RUN  chmod +x 7nodeds/truffle_npm_install_deploy.sh
+CMD sh 7nodeds/truffle_npm_install_deploy.sh
