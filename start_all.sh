@@ -64,13 +64,13 @@ docker run -d \
   --name bob-node \
   --network local-ilp \
   -e "RUST_LOG=interledger=trace" \
-  interledgerrs/ilp-node \
+  interledgerrs/ilp-node:$(git rev-parse --short HEAD)-dev-all-features \
+  --ilp_address example.bob \
+  --secret_seed 1604966725982139900555208458637022875563691455429373719368053354 \
   --admin_auth_token hi_bob \
   --redis_url redis://redis:6379/4 \
-  --secret_seed 1604966725982139900555208458637022875563691455429373719368053354 \
-  --ilp_address example.bob \  
-  --settlement_api_bind_address 0.0.0.0:7771 \
   --http_bind_address 0.0.0.0:7770 \
+  --settlement_api_bind_address 0.0.0.0:7771 \
   --exchange_rate.provider CoinCap
 sleep 2
 # start XRP settlement engine
@@ -84,17 +84,17 @@ docker run -d \
   interledgerjs/settlement-xrp
 sleep 2
 # start Interledger node
-docker run -d  \
+docker run -d \
   --name charlie-node \
   --network local-ilp \
   -e "RUST_LOG=interledger=trace" \
-  interledgerrs/ilp-node \
-  --admin_auth_token hi_charlie \
-  --redis_url redis://redis:6379/6 \ 
-  --secret_seed 1232362131122139900555208458637022875563691455429373719368053354 \
+  interledgerrs/ilp-node:$(git rev-parse --short HEAD)-dev-all-features \
   --ilp_address example.charlie \
-  --settlement_api_bind_address 0.0.0.0:7771 \
+  --secret_seed 1232362131122139900555208458637022875563691455429373719368053354 \
+  --admin_auth_token hi_charlie \
+  --redis_url redis://redis:6379/6 \
   --http_bind_address 0.0.0.0:7770 \
+  --settlement_api_bind_address 0.0.0.0:7771 \
   --exchange_rate.provider CoinCap
 sleep 2
 # start Ethereum settlement engine
