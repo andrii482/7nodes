@@ -218,9 +218,7 @@ git clone https://github.com/andrii482/7nodes.git
 cd 7nodes
 docker build --no-cache -t ubuntu_truffle .
 cd
-sleep 5
-docker run --rm -itd  --name ubuntu_truffle  --network local-ilp  ubuntu_truffle
-sleep 10
+sleep 2
 docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://ingrid-node:7770 accounts create ingrid \
   --auth hi_ingrid \
   --ilp-address example.ingrid \
@@ -382,4 +380,6 @@ docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://charl
   --ilp-address example.charlie \
   --asset-code XRP \
   --asset-scale 1 \
-  --ilp-over-http-incoming-token charlie_password
+  --ilp-over-http-incoming-token charlie_psleep 5
+sleep 5
+docker run --rm -itd  --name ubuntu_truffle  --network local-ilp  ubuntu_truffleassword
