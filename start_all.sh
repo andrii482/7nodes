@@ -1,3 +1,5 @@
+```bash
+
 docker stop redis ethereum-testnet bob-node charlie-node  bob-eth bob-xrp charlie-xrp david-eth david-ltc david-node felix-ltc felix-xtz felix-node  hugo-xtz hugo-xmr hugo-node ingrid-xmr ingrid-node ubuntu_truffle
 docker rm redis ethereum-testnet bob-node charlie-node  bob-eth bob-xrp charlie-xrp david-eth david-ltc david-node felix-ltc felix-xtz felix-node  hugo-xtz hugo-xmr hugo-node ingrid-xmr ingrid-node ubuntu_truffle
 docker network rm local-ilp
@@ -221,14 +223,14 @@ sleep 2
 docker run --rm -itd  --name ubuntu_truffle  --network local-ilp  ubuntu_truffle
 cd
 sleep 2
-docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://ingrid-node:7770 accounts create ingrid \
+docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://ingrid-node:7770 accounts create ingrid \
   --auth hi_ingrid \
   --ilp-address example.ingrid \
   --asset-code XMR \
   --asset-scale 1 \
   --ilp-over-http-incoming-token ingrid_password
 sleep 2
-docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://ingrid-node:7770 accounts create hugo \
+docker run --rm -d--network local-ilp interledgerrs/ilp-cli --node http://ingrid-node:7770 accounts create hugo \
   --auth hi_ingrid \
   --ilp-address example.hugo \
   --asset-code XMR \
@@ -242,7 +244,7 @@ docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://ingrid-n
   --min-balance -150000 \
   --routing-relation Peer
 sleep 2
-docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://hugo-node:7770 accounts create ingrid \
+docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://hugo-node:7770 accounts create ingrid \
   --auth hi_hugo \
   --ilp-address example.ingrid \
   --asset-code XMR \
@@ -257,7 +259,7 @@ docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://hugo-nod
   --min-balance -150000 \
   --routing-relation Peer
 sleep 2
-docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://hugo-node:7770 accounts create felix \
+docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://hugo-node:7770 accounts create felix \
   --auth hi_hugo \
   --ilp-address example.felix \
   --asset-code XTZ \
@@ -272,7 +274,7 @@ docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://hugo-nod
   --min-balance -150000 \
   --routing-relation Peer
 sleep 2
-docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://felix-node:7770 accounts create hugo \
+docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://felix-node:7770 accounts create hugo \
   --auth hi_felix \
   --ilp-address example.hugo \
   --asset-code XTZ \
@@ -287,7 +289,7 @@ docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://felix-no
   --min-balance -150000 \
   --routing-relation Peer
 sleep 2
-docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://felix-node:7770 accounts create david \
+docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://felix-node:7770 accounts create david \
   --auth hi_felix \
   --ilp-address example.david \
   --asset-code LTC \
@@ -302,7 +304,7 @@ docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://felix-no
   --min-balance -150000 \
   --routing-relation Peer
 sleep 2
-docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://david-node:7770 accounts create felix \
+docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://david-node:7770 accounts create felix \
   --auth hi_david \
   --ilp-address example.felix \
   --asset-code LTC \
@@ -317,7 +319,7 @@ docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://david-no
   --min-balance -150000 \
   --routing-relation Peer
 sleep 2  
-docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://bob-node:7770 accounts create david \
+docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://bob-node:7770 accounts create david \
   --auth hi_bob \
   --ilp-address example.david \
   --asset-code ETH \
@@ -332,7 +334,7 @@ docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://bob-node
   --min-balance -150000 \
   --routing-relation Peer
 sleep 2  
-docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://david-node:7770 accounts create bob \
+docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://david-node:7770 accounts create bob \
   --auth hi_david \
   --ilp-address example.bob \
   --asset-code ETH \
@@ -347,7 +349,7 @@ docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://david-no
   --min-balance -150000 \
   --routing-relation Peer
 sleep 2  
-docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://bob-node:7770 accounts create charlie \
+docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://bob-node:7770 accounts create charlie \
   --auth hi_bob \
   --ilp-address example.charlie \
   --asset-code XRP \
@@ -362,7 +364,7 @@ docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://bob-node
   --min-balance -150000 \
   --routing-relation Peer
 sleep 2  
-docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://charlie-node:7770 accounts create bob \
+docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://charlie-node:7770 accounts create bob \
   --auth hi_charlie \
   --ilp-address example.bob \
   --asset-code XRP \
@@ -377,7 +379,7 @@ docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://charlie-
   --min-balance -150000 \
   --routing-relation Peer
 sleep 2  
-docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://charlie-node:7770 accounts create charlie \
+docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://charlie-node:7770 accounts create charlie \
   --auth hi_charlie \
   --ilp-address example.charlie \
   --asset-code XRP \
