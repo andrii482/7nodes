@@ -219,12 +219,7 @@ cd 7nodes
 docker build --no-cache -t ubuntu_truffle .
 cd
 docker run --rm -itd  --name ubuntu_truffle  --network local-ilp  ubuntu_truffle
-alias ingrid-cli="docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://ingrid-node:7770"
-alias hugo-cli="docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://hugo-node:7770"
-alias felix-cli="docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://felix-node:7770"
-alias david-cli="docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://david-node:7770"
-alias bob-cli="docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://bob-node:7770"
-alias charlie-cli="docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://charlie-node:7770"
+sleep 2
 ingrid-cli accounts create ingrid \
   --auth hi_ingrid \
   --ilp-address example.ingrid \
