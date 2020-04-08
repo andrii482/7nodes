@@ -1,20 +1,32 @@
+# stop docker containers from previous run
 docker stop redis ethereum-testnet bob-node charlie-node  bob-eth bob-xrp charlie-xrp david-eth david-ltc david-node felix-ltc felix-xtz felix-node  hugo-xtz hugo-xmr hugo-node ingrid-xmr ingrid-node ubuntu_truffle
+# delete docker containers from previous run
 docker rm redis ethereum-testnet bob-node charlie-node  bob-eth bob-xrp charlie-xrp david-eth david-ltc david-node felix-ltc felix-xtz felix-node  hugo-xtz hugo-xmr hugo-node ingrid-xmr ingrid-node ubuntu_truffle
+# delete docker network from previous run
 docker network rm local-ilp
+# pull  docker images
 docker pull interledgerrs/ilp-cli
 docker pull interledgerrs/ilp-settlement-ethereum
 docker pull trufflesuite/ganache-cli
 docker pull interledgerjs/settlement-xrp
 docker pull redis
-docker build -f ./docker/ilp-node.dockerfile -t interledgerrs/ilp-node --build-arg CARGO_BUILD_OPTION="--release --features monitoring --manifest-path ./crates/ilp-node/Cargo.toml" --build-arg RUST_BIN_DIR_NAME="release" https://github.com/interledger-rs/interledger-rs.git
+# build docker image for the Interledger.rs node
+docker build -f ./docker/ilp-node.dockerfile -t interledgerrs/ilp-node \
+  --build-arg CARGO_BUILD_OPTION="--release \
+  --features monitoring \
+  --manifest-path ./crates/ilp-node/Cargo.toml" \
+  --build-arg RUST_BIN_DIR_NAME="release" https://github.com/interledger-rs/interledger-rs.git
 sleep 2
+# create a local Docker network so each service can communicate with each other
 docker network create local-ilp
 sleep 2
+# start a Redis database instance that will be shared across all the services
 docker run -d \
   --name redis \
   --network local-ilp \
   redis --databases 35
 sleep 2
+# start a local Ethereum testnet with 10 prefunded accounts
 docker run -d \
   --name ethereum-testnet \
   --network local-ilp \
@@ -22,6 +34,7 @@ docker run -d \
   -m "abstract vacuum mammal awkward pudding scene penalty purchase dinner depart evoke puzzle" \
   -i 1
 sleep 2
+# start Ethereum settlement engine
 docker run  -d \
   --name bob-eth \
   --network local-ilp \
@@ -35,8 +48,9 @@ docker run  -d \
   --redis_url redis://redis:6379/2 \
   --asset_scale 1 \
   --settlement_api_bind_address 0.0.0.0:3000
- sleep 2
- docker run  -d \
+sleep 2
+# start XRP settlement engine
+docker run  -d \
   --name bob-xrp \
   --network local-ilp \
   -e "DEBUG=settlement*" \
@@ -45,8 +59,19 @@ docker run  -d \
   -e "ENGINE_PORT=3001" \
   interledgerjs/settlement-xrp
 sleep 2
-  docker run --rm -itd --network=local-ilp -e "RUST_LOG=interledger=trace" --name bob-node interledgerrs/ilp-node --admin_auth_token hi_bob --redis_url redis://redis:6379/4  --secret_seed 1604966725982139900555208458637022875563691455429373719368053354   --ilp_address example.bob  --settlement_api_bind_address 0.0.0.0:7771 --http_bind_address 0.0.0.0:7770  --exchange_rate.provider CoinCap
+# start Interledger node
+docker run --rm -itd \
+  --network=local-ilp 
+  -e "RUST_LOG=interledger=trace" 
+  --name bob-node interledgerrs/ilp-node 
+  --admin_auth_token hi_bob 
+  --redis_url redis://redis:6379/4  
+  --secret_seed 1604966725982139900555208458637022875563691455429373719368053354   --ilp_address example.bob  
+  --settlement_api_bind_address 0.0.0.0:7771 
+  --http_bind_address 0.0.0.0:7770  
+  --exchange_rate.provider CoinCap
 sleep 2
+# start XRP settlement engine
 docker run -d \
   --name charlie-xrp \
   --network local-ilp \
@@ -56,8 +81,19 @@ docker run -d \
   -e "ENGINE_PORT=3000" \
   interledgerjs/settlement-xrp
 sleep 2
-docker run --rm -itd --network=local-ilp -e "RUST_LOG=interledger=trace" --name charlie-node interledgerrs/ilp-node --admin_auth_token hi_charlie --redis_url redis://redis:6379/6  --secret_seed 1232362131122139900555208458637022875563691455429373719368053354   --ilp_address example.charlie  --settlement_api_bind_address 0.0.0.0:7771 --http_bind_address 0.0.0.0:7770  --exchange_rate.provider CoinCap
- sleep 2
+# start Interledger node
+docker run --rm -itd  \
+  --network=local-ilp 
+  -e "RUST_LOG=interledger=trace" 
+  --name charlie-node interledgerrs/ilp-node 
+  --admin_auth_token hi_charlie 
+  --redis_url redis://redis:6379/6  
+  --secret_seed 1232362131122139900555208458637022875563691455429373719368053354   --ilp_address example.charlie  
+  --settlement_api_bind_address 0.0.0.0:7771 
+  --http_bind_address 0.0.0.0:7770  
+  --exchange_rate.provider CoinCap
+sleep 2
+# start Ethereum settlement engine
 docker run -d \
   --name david-ltc \
   --network local-ilp \
@@ -73,6 +109,7 @@ docker run -d \
   --asset_scale 1 \
   --settlement_api_bind_address 0.0.0.0:3000
 sleep 2
+# start Ethereum settlement engine
 docker run -d \
   --name david-eth \
   --network local-ilp \
@@ -87,6 +124,7 @@ docker run -d \
   --asset_scale 1 \
   --settlement_api_bind_address 0.0.0.0:3000 
 sleep 2
+# start Interledger node
 docker run -d \
   --name david-node \
   --network local-ilp \
@@ -100,6 +138,7 @@ docker run -d \
   --settlement_api_bind_address 0.0.0.0:7771 \
   --exchange_rate.provider CoinCap  
 sleep 2
+# start Ethereum settlement engine
 docker run -d \
   --name felix-ltc \
   --network local-ilp \
@@ -115,6 +154,7 @@ docker run -d \
   --asset_scale 1 \
   --settlement_api_bind_address 0.0.0.0:3000
 sleep 2
+# start Ethereum settlement engine
 docker run -d \
   --name felix-xtz \
   --network local-ilp \
@@ -130,6 +170,7 @@ docker run -d \
   --asset_scale 1 \
   --settlement_api_bind_address 0.0.0.0:3000
 sleep 2
+# start Interledger node
 docker run -d \
   --name felix-node \
   --network local-ilp \
@@ -143,6 +184,7 @@ docker run -d \
   --settlement_api_bind_address 0.0.0.0:7771 \
   --exchange_rate.provider CoinCap  
 sleep 2
+# start Ethereum settlement engine
 docker run -d \
   --name hugo-xtz \
   --network local-ilp \
@@ -158,6 +200,7 @@ docker run -d \
   --asset_scale 1 \
   --settlement_api_bind_address 0.0.0.0:3000
 sleep 2
+# start Ethereum settlement engine
 docker run -d \
   --name hugo-xmr \
   --network local-ilp \
@@ -173,6 +216,7 @@ docker run -d \
   --asset_scale 1 \
   --settlement_api_bind_address 0.0.0.0:3000
 sleep 2
+# start Interledger node
 docker run -d \
   --name hugo-node \
   --network local-ilp \
@@ -186,6 +230,7 @@ docker run -d \
   --settlement_api_bind_address 0.0.0.0:7771 \
   --exchange_rate.provider CoinCap  
 sleep 2
+# start Ethereum settlement engine
 docker run -d \
   --name ingrid-xmr \
   --network local-ilp \
@@ -201,6 +246,7 @@ docker run -d \
   --asset_scale 1 \
   --settlement_api_bind_address 0.0.0.0:3000
 sleep 2
+# start Interledger node
 docker run -d \
   --name ingrid-node \
   --network local-ilp \
@@ -214,11 +260,16 @@ docker run -d \
   --settlement_api_bind_address 0.0.0.0:7771 \
   --exchange_rate.provider CoinCap 
 sleep 2
+# clone repo for truffle job (docker build build and deploy tokens)
 git clone https://github.com/andrii482/7nodes.git
+# chande work directory
 cd 7nodes
+# build truffle image
 docker build --no-cache -t ubuntu_truffle .
+# chande work directory
 cd
 sleep 2
+# create Ingrid account
 docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://ingrid-node:7770 accounts create ingrid \
   --auth hi_ingrid \
   --ilp-address example.ingrid \
@@ -226,6 +277,7 @@ docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://ingri
   --asset-scale 1 \
   --ilp-over-http-incoming-token ingrid_password
 sleep 2
+# create Ingrid-Hugo account on Ingrid node
 docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://ingrid-node:7770 accounts create hugo \
   --auth hi_ingrid \
   --ilp-address example.hugo \
@@ -240,6 +292,7 @@ docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://ingri
   --min-balance -150000 \
   --routing-relation Peer
 sleep 2
+# create Hugo-Ingrid account on Hugo node
 docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://hugo-node:7770 accounts create ingrid \
   --auth hi_hugo \
   --ilp-address example.ingrid \
@@ -255,6 +308,7 @@ docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://hugo-
   --min-balance -150000 \
   --routing-relation Peer
 sleep 2
+# create Hugo-Felix account on Hugo node
 docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://hugo-node:7770 accounts create felix \
   --auth hi_hugo \
   --ilp-address example.felix \
@@ -270,6 +324,7 @@ docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://hugo-
   --min-balance -150000 \
   --routing-relation Peer
 sleep 2
+# create Felix-Hugo account on Felix node
 docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://felix-node:7770 accounts create hugo \
   --auth hi_felix \
   --ilp-address example.hugo \
@@ -285,6 +340,7 @@ docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://felix
   --min-balance -150000 \
   --routing-relation Peer
 sleep 2
+# create Felix-David account on Felix node
 docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://felix-node:7770 accounts create david \
   --auth hi_felix \
   --ilp-address example.david \
@@ -300,6 +356,7 @@ docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://felix
   --min-balance -150000 \
   --routing-relation Peer
 sleep 2
+# create David-Felix account on David node
 docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://david-node:7770 accounts create felix \
   --auth hi_david \
   --ilp-address example.felix \
@@ -315,6 +372,7 @@ docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://david
   --min-balance -150000 \
   --routing-relation Peer
 sleep 2  
+# create Bob-David account on Bob node
 docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://bob-node:7770 accounts create david \
   --auth hi_bob \
   --ilp-address example.david \
@@ -330,6 +388,7 @@ docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://bob-n
   --min-balance -150000 \
   --routing-relation Peer
 sleep 2  
+# create David-Bob account on David node
 docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://david-node:7770 accounts create bob \
   --auth hi_david \
   --ilp-address example.bob \
@@ -345,6 +404,7 @@ docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://david
   --min-balance -150000 \
   --routing-relation Peer
 sleep 2  
+# create Bob-Charlie account on Bob node
 docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://bob-node:7770 accounts create charlie \
   --auth hi_bob \
   --ilp-address example.charlie \
@@ -360,6 +420,7 @@ docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://bob-n
   --min-balance -150000 \
   --routing-relation Peer
 sleep 2  
+# create Charlie-Bob account on Charlie node
 docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://charlie-node:7770 accounts create bob \
   --auth hi_charlie \
   --ilp-address example.bob \
@@ -375,6 +436,7 @@ docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://charl
   --min-balance -150000 \
   --routing-relation Peer
 sleep 2  
+# create Charlie account
 docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://charlie-node:7770 accounts create charlie \
   --auth hi_charlie \
   --ilp-address example.charlie \
@@ -382,4 +444,5 @@ docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://charl
   --asset-scale 1 \
   --ilp-over-http-incoming-token charlie_password
 sleep 5
-docker run --rm -itd  --name ubuntu_truffle  --network local-ilp  ubuntu_truffle
+# deploy tokens
+docker run --rm -it  --name ubuntu_truffle --network local-ilp  ubuntu_truffle
