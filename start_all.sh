@@ -61,9 +61,9 @@ docker run  -d \
 sleep 2
 # start Interledger node
 docker run -d \
-  --network=local-ilp \
-  -e "RUST_LOG=interledger=trace" \
   --name bob-node \
+  --network local-ilp \
+  -e "RUST_LOG=interledger=trace" \
   interledgerrs/ilp-node \
   --admin_auth_token hi_bob \
   --redis_url redis://redis:6379/4 \
@@ -85,9 +85,9 @@ docker run -d \
 sleep 2
 # start Interledger node
 docker run -d  \
-  --network=local-ilp \
-  -e "RUST_LOG=interledger=trace" \
   --name charlie-node \
+  --network local-ilp \
+  -e "RUST_LOG=interledger=trace" \
   interledgerrs/ilp-node \
   --admin_auth_token hi_charlie \
   --redis_url redis://redis:6379/6 \ 
