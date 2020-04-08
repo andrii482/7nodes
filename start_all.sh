@@ -1,5 +1,5 @@
-docker stop redis ethereum-testnet alice-node bob-node charlie-node alice-eth bob-eth bob-xrp charlie-xrp david-eth david-ltc david-node emily-ltc emily-node felix-ltc felix-xtz felix-node gerald-xtz gerald-node hugo-xtz hugo-xmr hugo-node ingrid-xmr ingrid-node
-docker rm redis ethereum-testnet alice-node bob-node charlie-node alice-eth bob-eth bob-xrp charlie-xrp david-eth david-ltc david-node emily-ltc emily-node felix-ltc felix-xtz felix-node gerald-xtz gerald-node hugo-xtz hugo-xmr hugo-node ingrid-xmr ingrid-node
+docker stop redis ethereum-testnet alice-node bob-node charlie-node alice-eth bob-eth bob-xrp charlie-xrp david-eth david-ltc david-node emily-ltc emily-node felix-ltc felix-xtz felix-node gerald-xtz gerald-node hugo-xtz hugo-xmr hugo-node ingrid-xmr ingrid-node ubuntu_truffle
+docker rm redis ethereum-testnet alice-node bob-node charlie-node alice-eth bob-eth bob-xrp charlie-xrp david-eth david-ltc david-node emily-ltc emily-node felix-ltc felix-xtz felix-node gerald-xtz gerald-node hugo-xtz hugo-xmr hugo-node ingrid-xmr ingrid-node ubuntu_truffle
 docker network rm local-ilp
 docker pull interledgerrs/ilp-cli
 docker pull interledgerrs/ilp-settlement-ethereum
