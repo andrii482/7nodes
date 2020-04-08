@@ -60,7 +60,7 @@ docker run  -d \
   interledgerjs/settlement-xrp
 sleep 2
 # start Interledger node
-docker run --rm -itd \
+docker run -d \
   --network=local-ilp \
   -e "RUST_LOG=interledger=trace" \
   --name bob-node interledgerrs/ilp-node \
@@ -83,7 +83,7 @@ docker run -d \
   interledgerjs/settlement-xrp
 sleep 2
 # start Interledger node
-docker run --rm -itd  \
+docker run -d  \
   --network=local-ilp \
   -e "RUST_LOG=interledger=trace" \
   --name charlie-node interledgerrs/ilp-node \
