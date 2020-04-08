@@ -229,18 +229,6 @@ alias david-cli="docker run --rm --network local-ilp interledgerrs/ilp-cli --nod
 alias alice-cli="docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://alice-node:7770"
 alias bob-cli="docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://bob-node:7770"
 alias charlie-cli="docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://charlie-node:7770"
-charlie-cli accounts balance charlie --auth hi_charlie 
-charlie-cli accounts balance bob --auth hi_charlie
-bob-cli accounts balance charlie --auth hi_bob
-bob-cli accounts balance david --auth hi_bob
-david-cli accounts balance bob --auth hi_david
-david-cli accounts balance felix --auth hi_david
-felix-cli accounts balance david --auth hi_felix
-felix-cli accounts balance hugo --auth hi_felix
-hugo-cli accounts balance felix --auth hi_hugo
-hugo-cli accounts balance ingrid --auth hi_hugo
-ingrid-cli accounts balance hugo --auth hi_ingrid
-ingrid-cli accounts balance ingrid --auth hi_ingrid
 sleep 2
 ingrid-cli accounts create ingrid \
   --auth hi_ingrid \
