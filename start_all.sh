@@ -262,11 +262,11 @@ docker run -d \
 sleep 2
 # clone repo for truffle job (docker build build and deploy tokens)
 git clone https://github.com/andrii482/7nodes.git
-# chande work directory
+# change work directory
 cd 7nodes
 # build truffle image
 docker build --no-cache -t ubuntu_truffle .
-# chande work directory
+# change work directory
 cd
 sleep 2
 # create Ingrid account
