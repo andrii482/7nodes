@@ -1,5 +1,3 @@
-```bash
-
 docker stop redis ethereum-testnet bob-node charlie-node  bob-eth bob-xrp charlie-xrp david-eth david-ltc david-node felix-ltc felix-xtz felix-node  hugo-xtz hugo-xmr hugo-node ingrid-xmr ingrid-node ubuntu_truffle
 docker rm redis ethereum-testnet bob-node charlie-node  bob-eth bob-xrp charlie-xrp david-eth david-ltc david-node felix-ltc felix-xtz felix-node  hugo-xtz hugo-xmr hugo-node ingrid-xmr ingrid-node ubuntu_truffle
 docker network rm local-ilp
