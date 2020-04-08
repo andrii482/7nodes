@@ -218,4 +218,5 @@ git clone https://github.com/andrii482/7nodes.git
 cd 7nodes
 docker build --no-cache -t ubuntu_truffle .
 cd
+sleep 2
 docker run --rm -itd  --name ubuntu_truffle  --network local-ilp  ubuntu_truffle
