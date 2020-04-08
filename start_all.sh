@@ -380,6 +380,6 @@ docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://charl
   --ilp-address example.charlie \
   --asset-code XRP \
   --asset-scale 1 \
-  --ilp-over-http-incoming-token charlie_psleep 5
+  --ilp-over-http-incoming-token charlie_psassword
 sleep 5
-docker run --rm -itd  --name ubuntu_truffle  --network local-ilp  ubuntu_truffleassword
+docker run --rm -itd  --name ubuntu_truffle  --network local-ilp  ubuntu_truffle
