@@ -1,3 +1,6 @@
+docker stop redis ethereum-testnet alice-node bob-node charlie-node alice-eth bob-eth bob-xrp charlie-xrp david-eth david-ltc david-node emily-ltc emily-node felix-ltc felix-xtz felix-node gerald-xtz gerald-node hugo-xtz hugo-xmr hugo-node ingrid-xmr ingrid-node
+docker rm redis ethereum-testnet alice-node bob-node charlie-node alice-eth bob-eth bob-xrp charlie-xrp david-eth david-ltc david-node emily-ltc emily-node felix-ltc felix-xtz felix-node gerald-xtz gerald-node hugo-xtz hugo-xmr hugo-node ingrid-xmr ingrid-node
+docker network rm local-ilp
 docker pull interledgerrs/ilp-cli
 docker pull interledgerrs/ilp-settlement-ethereum
 docker pull trufflesuite/ganache-cli
@@ -131,7 +134,7 @@ docker run -d \
   --name felix-node \
   --network local-ilp \
   -e "RUST_LOG=interledger=trace" \
-  interledgerrs/ilp-node:$(git rev-parse --short HEAD)-dev-all-features \
+  interledgerrs/ilp-node \
   --ilp_address example.felix \
   --secret_seed da5527165fdfdd8390559fcffb1ee5387441229e43101a5b4e208969d1872dc3 \
   --admin_auth_token hi_felix \
@@ -174,7 +177,7 @@ docker run -d \
   --name hugo-node \
   --network local-ilp \
   -e "RUST_LOG=interledger=trace" \
-  interledgerrs/ilp-node:$(git rev-parse --short HEAD)-dev-all-features \
+  interledgerrs/ilp-node \
   --ilp_address example.hugo \
   --secret_seed 887cac04a3d6a297e19d8a9d89d3efd611a004528f979139914b1b89245def90 \
   --admin_auth_token hi_hugo \
@@ -202,7 +205,7 @@ docker run -d \
   --name ingrid-node \
   --network local-ilp \
   -e "RUST_LOG=interledger=trace" \
-  interledgerrs/ilp-node:$(git rev-parse --short HEAD)-dev-all-features \
+  interledgerrs/ilp-node \
   --ilp_address example.ingrid \
   --secret_seed f5afcae854869ad7eba9e278983af25685c45c90e84778005d01fc8c7d6340b3 \
   --admin_auth_token hi_ingrid \
@@ -211,18 +214,16 @@ docker run -d \
   --settlement_api_bind_address 0.0.0.0:7771 \
   --exchange_rate.provider CoinCap 
 sleep 2
-#############################################
 git clone https://github.com/andrii482/7nodes.git
 cd 7nodes
 docker build --no-cache -t ubuntu_truffle .
-docker run --rm -it  --name ubuntu_truffle  --network local-ilp  ubuntu_truffle
 cd
-##############################################
-alias   ingrid-cli="docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://ingrid-node:7770"
-alias   hugo-cli="docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://hugo-node:7770"
-alias   felix-cli="docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://felix-node:7770"
-alias   david-cli="docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://david-node:7770"
-alias     bob-cli="docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://bob-node:7770"
+docker run --rm -itd  --name ubuntu_truffle  --network local-ilp  ubuntu_truffle
+alias ingrid-cli="docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://ingrid-node:7770"
+alias hugo-cli="docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://hugo-node:7770"
+alias felix-cli="docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://felix-node:7770"
+alias david-cli="docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://david-node:7770"
+alias bob-cli="docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://bob-node:7770"
 alias charlie-cli="docker run --rm --network local-ilp interledgerrs/ilp-cli --node http://charlie-node:7770"
 ingrid-cli accounts create ingrid \
   --auth hi_ingrid \
