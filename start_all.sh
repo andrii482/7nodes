@@ -228,7 +228,7 @@ docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://ingri
   --asset-scale 1 \
   --ilp-over-http-incoming-token ingrid_password
 sleep 2
-docker run --rm -d--network local-ilp interledgerrs/ilp-cli --node http://ingrid-node:7770 accounts create hugo \
+docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://ingrid-node:7770 accounts create hugo \
   --auth hi_ingrid \
   --ilp-address example.hugo \
   --asset-code XMR \
