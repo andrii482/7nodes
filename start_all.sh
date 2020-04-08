@@ -60,11 +60,11 @@ docker run  -d \
   interledgerjs/settlement-xrp
 sleep 2
 # start Interledger node
-docker run -d \
+docker run -itd \
   --name bob-node \
   --network local-ilp \
   -e "RUST_LOG=interledger=trace" \
-  interledgerrs/ilp-node:$(git rev-parse --short HEAD)-dev-all-features \
+  interledgerrs/ilp-node \
   --ilp_address example.bob \
   --secret_seed 1604966725982139900555208458637022875563691455429373719368053354 \
   --admin_auth_token hi_bob \
@@ -84,11 +84,11 @@ docker run -d \
   interledgerjs/settlement-xrp
 sleep 2
 # start Interledger node
-docker run -d \
+docker run -itd \
   --name charlie-node \
   --network local-ilp \
   -e "RUST_LOG=interledger=trace" \
-  interledgerrs/ilp-node:$(git rev-parse --short HEAD)-dev-all-features \
+  interledgerrs/ilp-node \
   --ilp_address example.charlie \
   --secret_seed 1232362131122139900555208458637022875563691455429373719368053354 \
   --admin_auth_token hi_charlie \
