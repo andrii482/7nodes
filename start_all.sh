@@ -449,4 +449,4 @@ docker run --rm -d --network local-ilp interledgerrs/ilp-cli --node http://charl
   --ilp-over-http-incoming-token charlie_password
 sleep 5
 # deploy tokens
-docker run --rm -it  --name ubuntu_truffle --network local-ilp  ubuntu_truffle
+docker run --rm --name ubuntu_truffle --network local-ilp  ubuntu_truffle
