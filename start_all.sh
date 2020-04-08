@@ -71,7 +71,7 @@ docker run -d \
   --ilp_address example.bob \  
   --settlement_api_bind_address 0.0.0.0:7771 \
   --http_bind_address 0.0.0.0:7770 \
-  --exchange_rate.provider CoinCap \
+  --exchange_rate.provider CoinCap
 sleep 2
 # start XRP settlement engine
 docker run -d \
@@ -95,7 +95,7 @@ docker run -d  \
   --ilp_address example.charlie \
   --settlement_api_bind_address 0.0.0.0:7771 \
   --http_bind_address 0.0.0.0:7770 \
-  --exchange_rate.provider CoinCap \
+  --exchange_rate.provider CoinCap
 sleep 2
 # start Ethereum settlement engine
 docker run -d \
