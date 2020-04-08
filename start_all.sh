@@ -63,7 +63,8 @@ sleep 2
 docker run -d \
   --network=local-ilp \
   -e "RUST_LOG=interledger=trace" \
-  --name bob-node interledgerrs/ilp-node \
+  --name bob-node \
+  interledgerrs/ilp-node \
   --admin_auth_token hi_bob \
   --redis_url redis://redis:6379/4 \
   --secret_seed 1604966725982139900555208458637022875563691455429373719368053354 \
@@ -86,7 +87,8 @@ sleep 2
 docker run -d  \
   --network=local-ilp \
   -e "RUST_LOG=interledger=trace" \
-  --name charlie-node interledgerrs/ilp-node \
+  --name charlie-node \
+  interledgerrs/ilp-node \
   --admin_auth_token hi_charlie \
   --redis_url redis://redis:6379/6 \ 
   --secret_seed 1232362131122139900555208458637022875563691455429373719368053354 \
